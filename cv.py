@@ -27,6 +27,7 @@ print("")
 # ----------------
 
 # Dataset not split into training and testing
+print("Model Data without Splitting: ")
 print("Data points in Data Set: " + str(len(data)))
 svc = svm.SVC(kernel="linear")
 x = iris.data
@@ -42,7 +43,7 @@ for i in predict:
 
 score = round((float(match) / len(iris.target)) * 100, 1)
 print("Number of Matches: " + str(match))
-print("Score: " + str(score))
+print("Score: " + str(score) + "%")
 print("")
 
 # ----------------
@@ -50,6 +51,7 @@ print("")
 # ----------------
 
 # Split dataset into training and testing (60-40 ratio)
+print("Model Data with Splitting: ")
 train, test = train_test_split(data, test_size=0.4)
 print("Data points in Training Set: " + str(len(train)))
 print("Data points in Test Set: " + str(len(test)))
@@ -68,5 +70,14 @@ for i in predict_split:
 
 score_split = round((float(match_split) / len(test)) * 100, 1)
 print("Number of Matches: " + str(match_split))
-print("Score: " + str(score_split))
+print("Score: " + str(score_split) + "%")
 print("")
+
+# ----------------
+# MODEL DATA (CROSS-VALIDATION)
+# ----------------
+
+print("Model Data with Cross-Validation: ")
+k = int(raw_input("Insert integer number of cross-validations (k): "))
+score_cross = cross_val_score(svc, x, y, cv=k)
+print("Accuracy: %0.2f +/- %0.2f" % (score_cross.mean(), score_cross.std() * 2))
